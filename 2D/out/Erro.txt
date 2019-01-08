@@ -1,0 +1,3 @@
+ErrorL1 = 0.0039857
+ErrorL2 = 0.0270528
+ErrorLinf = 0.405629
