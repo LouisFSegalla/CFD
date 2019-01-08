@@ -14,16 +14,19 @@ for filename in filenames:
     f = open(filename, 'r')
 
     xCells = int(f.readline().split(":")[1])
+    yCells = int(f.readline().split(":")[1])
     numGhostCells = int(f.readline().split(":")[1])
     time = float(f.readline().split(":")[1])
     f.close()
 
-    x,u = np.loadtxt(filename,skiprows=3,unpack='true')
-    p, = ax.plot(x,u,lw=3)
-    ax.set_xlim(-1,1)
-    ax.set_ylim(-1.5,1.5)
+    x,y,u = np.loadtxt(filename,skiprows=4,unpack='true')
+    x = np.reshape(x,(xCells + 2*numGhostCells, yCells + 2*numGhostCells))
+    y = np.reshape(y,(xCells + 2*numGhostCells, yCells + 2*numGhostCells))
+    u = np.reshape(u,(xCells + 2*numGhostCells, yCells + 2*numGhostCells))
+    ax.set_aspect('equal', 'datalim')
+    ax.contourf(x,y,u)
     ax.set_title("Time = %5.3f"%time)
     fig.savefig(filename.replace(".txt",".png"))
 
 
-    #os.system("eog " + filename[0].replace(".txt",".png"))
+#os.system("eog " + filename[0].replace(".txt",".png"))
